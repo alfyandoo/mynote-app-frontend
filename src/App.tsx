@@ -1,11 +1,10 @@
-import React from 'react';
+import React from "react";
+import BaseNote from "./components/BaseNote";
 
-const App = () => {
+export const App = () => {
   return (
-    <h1 className="text-3xl font-bold underline">
-      My Note App
-    </h1>
+    <>
+      <BaseNote />
+    </>
   );
-}
-
-export default App;
+};
