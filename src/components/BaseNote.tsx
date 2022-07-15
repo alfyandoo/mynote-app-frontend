@@ -2,13 +2,21 @@ import React from 'react';
 import { getInitialData } from '../utils/index';
 import { AppendNote } from './AppendNote';
 import { ContentNote } from './ContentNote';
+const autoBind = require('auto-bind');
 
-class BaseNote extends React.Component {
+class BaseNote extends React.Component<{}, { [key: string]: {} }> {
   constructor(props: {}) {
     super(props);
     this.state = {
       data: getInitialData(),
+      statusName: "note",
     };
+    
+    autoBind(this);
+  }
+
+  deleteNote() {
+    return null;
   }
 
   render() {
@@ -19,8 +27,11 @@ class BaseNote extends React.Component {
           <AppendNote />
         </div>
 
-        <div>
-          <ContentNote />
+        <div className="">
+          <ContentNote
+            data={this.state.data}
+            statusName={this.state.statusName}
+          />
         </div>
       </div>
     );
