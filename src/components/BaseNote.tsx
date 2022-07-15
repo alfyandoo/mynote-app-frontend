@@ -1,8 +1,16 @@
-import React from 'react';
-import { getInitialData } from '../utils/index';
-import { AppendNote } from './AppendNote';
-import { ContentNote } from './ContentNote';
-const autoBind = require('auto-bind');
+import React from "react";
+import { getInitialData } from "../utils/index";
+import { AppendNote } from "./AppendNote";
+import { ContentNote } from "./ContentNote";
+import autoBind from "auto-bind";
+
+interface Idata {
+  id: number;
+  title: string;
+  body: string;
+  archived: boolean;
+  createdAt: string;
+}
 
 class BaseNote extends React.Component<{}, { [key: string]: {} }> {
   constructor(props: {}) {
@@ -11,12 +19,14 @@ class BaseNote extends React.Component<{}, { [key: string]: {} }> {
       data: getInitialData(),
       statusName: "note",
     };
-    
+
     autoBind(this);
   }
 
-  deleteNote() {
-    return null;
+  deleteNote(id: number) {
+    const data = this.state.data as Array<Idata>;
+    const note = data.filter((item: Idata) => item.id !== id);
+    this.setState({ data: note });
   }
 
   render() {
@@ -31,6 +41,7 @@ class BaseNote extends React.Component<{}, { [key: string]: {} }> {
           <ContentNote
             data={this.state.data}
             statusName={this.state.statusName}
+            onDelete={this.deleteNote}
           />
         </div>
       </div>
