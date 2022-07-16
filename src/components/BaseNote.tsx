@@ -18,6 +18,7 @@ class BaseNote extends React.Component<{}, { [key: string]: {} }> {
     this.state = {
       data: getInitialData(),
       statusName: "note",
+      search: "",
     };
 
     autoBind(this);
@@ -42,6 +43,15 @@ class BaseNote extends React.Component<{}, { [key: string]: {} }> {
     this.setState({ statusName: newStatusName });
   }
 
+  searchNote(value: string) {
+    this.setState((prevData) => {
+      return {
+        ...prevData,
+        search: value,
+      }
+    });
+  }
+
   render() {
     return (
       <div className="m-10">
@@ -57,6 +67,8 @@ class BaseNote extends React.Component<{}, { [key: string]: {} }> {
             onDelete={this.deleteNote}
             onChangeArchiveStatus={this.changeArchiveStatus}
             onChangeStatusName={this.changeStatusName}
+            search={this.state.search}
+            onSearch={this.searchNote}
           />
         </div>
       </div>

@@ -17,6 +17,8 @@ export const ContentNote = ({
   onDelete,
   onChangeArchiveStatus,
   onChangeStatusName,
+  search,
+  onSearch,
 }: any) => {
   const dataNote = data.filter((item: Idata) => item.archived === false);
   const dataArchived = data.filter((item: Idata) => item.archived === true);
@@ -24,9 +26,9 @@ export const ContentNote = ({
   return (
     <>
       <div>
-        <div className="flex flex-row items-start my-5">
-          <div className="flex">
-            <div
+        <div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 my-5">
+          <div className="flex flex-row">
+            <button
               className={`px-10 rounded-md cursor-pointer ${
                 statusName === "note"
                   ? "text-gray-600 bg-green-400"
@@ -34,10 +36,10 @@ export const ContentNote = ({
               }`}
               onClick={() => onChangeStatusName("note")}
             >
-              Note
-            </div>
+              <span className="text-xl">Note</span>
+            </button>
 
-            <div
+            <button
               className={`mx-10 px-10 rounded-md cursor-pointer ${
                 statusName === "archive"
                   ? "text-gray-600 bg-green-400"
@@ -45,25 +47,35 @@ export const ContentNote = ({
               }`}
               onClick={() => onChangeStatusName("archive")}
             >
-              Archive
-            </div>
+              <span className="text-xl">Archive</span>
+            </button>
           </div>
 
-          <SearchNote />
+          <SearchNote search={search} onSearch={onSearch} />
         </div>
         <div className="grid xl:grid-cols-4 gap-10 md:grid-cols-2 sm:grid-cols-1">
           {statusName === "note" && (
             <>
               {!!dataNote && dataNote.length !== 0 ? (
-                dataNote.map((item: Idata, i: number) => (
-                  <CardNote
-                    key={i}
-                    note={item}
-                    statusName={statusName}
-                    onDelete={onDelete}
-                    onChangeArchiveStatus={onChangeArchiveStatus}
-                  />
-                ))
+                dataNote
+                  .filter((data: Idata) => {
+                    if (search !== "") {
+                      return data.title
+                        .toLowerCase()
+                        .includes(search.toLowerCase());
+                    } else {
+                      return data;
+                    }
+                  })
+                  .map((item: Idata, i: number) => (
+                    <CardNote
+                      key={i}
+                      note={item}
+                      statusName={statusName}
+                      onDelete={onDelete}
+                      onChangeArchiveStatus={onChangeArchiveStatus}
+                    />
+                  ))
               ) : (
                 <NotFoundNote />
               )}
@@ -73,15 +85,25 @@ export const ContentNote = ({
           {statusName === "archive" && (
             <>
               {!!dataArchived && dataArchived.length !== 0 ? (
-                dataArchived.map((item: Idata, i: number) => (
-                  <CardNote
-                    key={i}
-                    note={item}
-                    statusName={statusName}
-                    onDelete={onDelete}
-                    onChangeArchiveStatus={onChangeArchiveStatus}
-                  />
-                ))
+                dataArchived
+                  .filter((data: Idata) => {
+                    if (search !== "") {
+                      return data.title
+                        .toLowerCase()
+                        .includes(search.toLowerCase());
+                    } else {
+                      return data;
+                    }
+                  })
+                  .map((item: Idata, i: number) => (
+                    <CardNote
+                      key={i}
+                      note={item}
+                      statusName={statusName}
+                      onDelete={onDelete}
+                      onChangeArchiveStatus={onChangeArchiveStatus}
+                    />
+                  ))
               ) : (
                 <NotFoundNote />
               )}
