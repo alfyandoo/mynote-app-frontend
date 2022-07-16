@@ -29,6 +29,19 @@ class BaseNote extends React.Component<{}, { [key: string]: {} }> {
     this.setState({ data: note });
   }
 
+  changeArchiveStatus(id: number) {
+    this.setState((prevData) => {
+      const data = prevData.data as Array<Idata>;
+      return {
+        data: data.map((item: Idata) => item.id === id ? { ...item, archived: true } : item),
+      }
+    });
+  }
+
+  changeStatusName(newStatusName: string) {
+    this.setState({ statusName: newStatusName });
+  }
+
   render() {
     return (
       <div className="m-10">
@@ -42,6 +55,8 @@ class BaseNote extends React.Component<{}, { [key: string]: {} }> {
             data={this.state.data}
             statusName={this.state.statusName}
             onDelete={this.deleteNote}
+            onChangeArchiveStatus={this.changeArchiveStatus}
+            onChangeStatusName={this.changeStatusName}
           />
         </div>
       </div>

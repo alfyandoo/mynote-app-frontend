@@ -10,7 +10,13 @@ interface Idata {
   createdAt: string;
 }
 
-export const ContentNote = ({ data, statusName, onDelete }: any) => {
+export const ContentNote = ({
+  data,
+  statusName,
+  onDelete,
+  onChangeArchiveStatus,
+  onChangeStatusName,
+}: any) => {
   const dataNote = data.filter((item: Idata) => item.archived === false);
   const dataArchived = data.filter((item: Idata) => item.archived === true);
 
@@ -19,11 +25,27 @@ export const ContentNote = ({ data, statusName, onDelete }: any) => {
       <div>
         <div className="flex flex-row items-start my-5">
           <div className="flex">
-            <div className="px-10 rounded-md text-gray-600 bg-green-200">
+            <div
+              className={`px-10 rounded-md cursor-pointer ${
+                statusName === "note"
+                  ? "text-gray-600 bg-green-400"
+                  : "hover:bg-green-100"
+              }`}
+              onClick={() => onChangeStatusName("note")}
+            >
               Note
             </div>
 
-            <div className="mx-3 rounded-md px-10">Archive</div>
+            <div
+              className={`mx-10 px-10 rounded-md cursor-pointer ${
+                statusName === "archive"
+                  ? "text-gray-600 bg-green-400"
+                  : "hover:bg-green-100"
+              }`}
+              onClick={() => onChangeStatusName("archive")}
+            >
+              Archive
+            </div>
           </div>
 
           <SearchNote />
@@ -38,14 +60,15 @@ export const ContentNote = ({ data, statusName, onDelete }: any) => {
                     note={item}
                     statusName={statusName}
                     onDelete={onDelete}
+                    onChangeArchiveStatus={onChangeArchiveStatus}
                   />
                 ))
               ) : (
-                <div className="flex flex-col items-center m-5">
+                <div className="flex flex-col items-center absolute lg:left-1/4 right-auto">
                   <img
                     src="images/404_unDraw.svg"
                     alt="not found"
-                    className="w-1/2"
+                    className="w-full object-fill bg-cover"
                   />
                   <p className="text-center m-3">Note Not Found!</p>
                 </div>
@@ -62,14 +85,15 @@ export const ContentNote = ({ data, statusName, onDelete }: any) => {
                     note={item}
                     statusName={statusName}
                     onDelete={onDelete}
+                    onChangeArchiveStatus={onChangeArchiveStatus}
                   />
                 ))
               ) : (
-                <div className="flex flex-col items-center m-5">
+                <div className="flex flex-col items-center absolute lg:left-1/4 right-auto">
                   <img
                     src="images/404_unDraw.svg"
                     alt="not found"
-                    className="w-1/2"
+                    className="w-full object-fill bg-cover"
                   />
                   <p className="text-center m-3">Note Not Found!</p>
                 </div>
