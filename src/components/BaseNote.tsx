@@ -33,7 +33,7 @@ class BaseNote extends React.Component<{}, { [key: string]: {} }> {
     this.setState((prevData) => {
       const data = prevData.data as Array<Idata>;
       return {
-        data: data.map((item: Idata) => item.id === id ? { ...item, archived: true } : item),
+        data: data.map((item: Idata) => item.id === id ? { ...item, archived: !item.archived } : item),
       }
     });
   }
