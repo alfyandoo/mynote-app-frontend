@@ -16,13 +16,13 @@ export const CardNote = ({
         <div className="flex justify-between my-3">
           <button
             className={`border-none text-white rounded-md px-5 ${
-              statusName === "note" ? "bg-blue-600" : "bg-orange-400"
+              statusName === "note" ? "bg-blue-600 hover:bg-blue-300 hover:text-gray-500" : "bg-orange-400 hover:bg-orange-300 hover:text-gray-500"
             }`}
             onClick={() => onChangeArchiveStatus(note.id)}
           >
             <span>{statusName === "note" ? "Set Archive" : "Set Note"}</span>
           </button>
-          <p className="flex justify-end text-yellow-600">
+          <p className="flex justify-end text-yellow-700">
             {showFormattedDate(note.createdAt)}
           </p>
         </div>
