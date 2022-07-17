@@ -3,16 +3,9 @@ import { getInitialData } from "../utils/index";
 import { AppendNote } from "./AppendNote";
 import { ContentNote } from "./ContentNote";
 import autoBind from "auto-bind";
+import { IData } from "../interface/IData"
 
-interface Idata {
-  id: number;
-  title: string;
-  body: string;
-  archived: boolean;
-  createdAt: string;
-}
-
-class BaseNote extends React.Component<{}, { [key: string]: {} }> {
+export class BaseNote extends React.Component<{}, { [key: string]: {} }> {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -31,16 +24,16 @@ class BaseNote extends React.Component<{}, { [key: string]: {} }> {
   }
 
   deleteNote(id: number) {
-    const data = this.state.data as Array<Idata>;
-    const note = data.filter((item: Idata) => item.id !== id);
+    const data = this.state.data as Array<IData>;
+    const note = data.filter((item: IData) => item.id !== id);
     this.setState({ data: note });
   }
 
   changeArchiveStatus(id: number) {
     this.setState((prevData) => {
-      const data = prevData.data as Array<Idata>;
+      const data = prevData.data as Array<IData>;
       return {
-        data: data.map((item: Idata) => item.id === id ? { ...item, archived: !item.archived } : item),
+        data: data.map((item: IData) => item.id === id ? { ...item, archived: !item.archived } : item),
       }
     });
   }
@@ -85,8 +78,8 @@ class BaseNote extends React.Component<{}, { [key: string]: {} }> {
   onSubmitNote(event: { preventDefault: () => void; }) {
     event.preventDefault();
 
-    const data = this.state.data as Array<Idata>;
-    const newData = this.state.newData as Idata;
+    const data = this.state.data as Array<IData>;
+    const newData = this.state.newData as { title: string; body: string; };
     const title = newData.title as string;
     const body = newData.body as string;
 
@@ -120,24 +113,24 @@ class BaseNote extends React.Component<{}, { [key: string]: {} }> {
         <h1 className="text-3xl my-10 text-center font-extrabold text-violet-600">My Note App</h1>
         <div className="min-w-full flex justify-center rounded-xl bg-violet-200">
           <AppendNote
-            newData={this.state.newData}
-            maxLengthTitle={this.state.maxLengthTitle}
-            maxLengthBody={this.state.maxLengthBody}
-            onTitleChange={this.onTitleChange}
-            onBodyChange={this.onBodyChange}
-            onSubmitNote={this.onSubmitNote}
+            newData={this.state.newData as { title: string; body: string; }}
+            maxLengthTitle={this.state.maxLengthTitle as number}
+            maxLengthBody={this.state.maxLengthBody as number}
+            onTitleChange={this.onTitleChange as (value: string) => void}
+            onBodyChange={this.onBodyChange as (value: string) => void}
+            onSubmitNote={this.onSubmitNote as (event: { preventDefault: () => void; }) => void}
           />
         </div>
 
-        <div className="">
+        <div>
           <ContentNote
-            data={this.state.data}
-            statusName={this.state.statusName}
-            onDelete={this.deleteNote}
-            onChangeArchiveStatus={this.changeArchiveStatus}
-            onChangeStatusName={this.changeStatusName}
-            search={this.state.search}
-            onSearch={this.searchNote}
+            data={this.state.data as Array<IData>}
+            statusName={this.state.statusName as string}
+            onDelete={this.deleteNote as (id: number) => void}
+            onChangeArchiveStatus={this.changeArchiveStatus as (id: number) => void}
+            onChangeStatusName={this.changeStatusName as (newStatusName: string) => void}
+            search={this.state.search as string}
+            onSearch={this.searchNote as (value: string) => void}
           />
         </div>
       </div>

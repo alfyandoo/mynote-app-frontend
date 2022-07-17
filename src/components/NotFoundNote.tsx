@@ -2,7 +2,7 @@ import React from "react";
 
 export const NotFoundNote = () => {
   return (
-    <div className="flex flex-col items-center absolute lg:left-1/4 right-auto">
+    <div className="absolute lg:w-[95vw]">
       <img
         src="images/404_unDraw.svg"
         alt="not found"

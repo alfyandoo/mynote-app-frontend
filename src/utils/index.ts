@@ -43,7 +43,7 @@ const getInitialData = () => ([
   },
 ]);
 
-const showFormattedDate = (date: string) => {
+const showFormattedDate = (date: string): string => {
   const options: Object = {
     weekday: "long",
     year: "numeric",

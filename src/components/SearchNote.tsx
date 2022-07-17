@@ -1,6 +1,7 @@
 import React from "react";
+import { ISearchNote } from "../interface/ISearchNote";
 
-export const SearchNote = ({ search, onSearch }: any) => {
+export const SearchNote = ({ search, onSearch }: ISearchNote) => {
   return (
     <>
       <div className="flex lg:justify-end md:justify-center sm:justify-center">

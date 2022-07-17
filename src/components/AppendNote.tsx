@@ -1,12 +1,22 @@
 import React from "react";
+import { IAppendNote } from "../interface/IAppendNote";
 
-export const AppendNote = ({ newData,maxLengthTitle, maxLengthBody, onTitleChange, onBodyChange, onSubmitNote }: any) => {
+export const AppendNote = ({
+  newData,
+  maxLengthTitle,
+  maxLengthBody,
+  onTitleChange,
+  onBodyChange,
+  onSubmitNote,
+}: IAppendNote) => {
   return (
     <>
       <form onSubmit={onSubmitNote}>
-        <h2 className="mt-5 text-3xl font-bold text-center">Add Note</h2>
+        <h2 className="mt-5 text-3xl font-bold text-center text-gray-700">Add Note</h2>
         <div className="my-5">
-          <p className="flex mr-3 justify-end text-white">remaining characters: {maxLengthTitle}</p>
+          <p className="flex mr-3 justify-end text-white">
+            remaining characters: {maxLengthTitle}
+          </p>
           <input
             className="w-full text-xl p-3 rounded-md border-2 border-violet-200"
             type="text"
@@ -19,7 +29,9 @@ export const AppendNote = ({ newData,maxLengthTitle, maxLengthBody, onTitleChang
         </div>
 
         <div>
-          <p className="flex justify-end text-white">remaining characters: {maxLengthBody}</p>
+          <p className="flex justify-end text-white">
+            remaining characters: {maxLengthBody}
+          </p>
           <textarea
             className="w-full h-64 p-3 rounded-md border-2 border-violet-200"
             typeof="text"
@@ -31,8 +43,8 @@ export const AppendNote = ({ newData,maxLengthTitle, maxLengthBody, onTitleChang
           />
         </div>
 
-        <button className="my-5 p-4 rounded-md text-white bg-violet-600 hover:bg-gray-600 hover:text-yellow-300">
-          <span>Add</span>
+        <button className="my-5 p-4 rounded-md group text-white bg-violet-600 hover:bg-gray-600">
+          <span className="text-white group-hover:text-yellow-400">Add</span>
         </button>
       </form>
     </>

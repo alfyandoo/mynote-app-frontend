@@ -2,14 +2,8 @@ import React from "react";
 import { CardNote } from "./CardNote";
 import { SearchNote } from "./SearchNote";
 import { NotFoundNote } from "./NotFoundNote";
-
-interface Idata {
-  id: number;
-  title: string;
-  body: string;
-  archived: boolean;
-  createdAt: string;
-}
+import { IData } from "../interface/IData";
+import { IContentNote } from "../interface/IContentNote";
 
 export const ContentNote = ({
   data,
@@ -19,9 +13,9 @@ export const ContentNote = ({
   onChangeStatusName,
   search,
   onSearch,
-}: any) => {
-  const dataNote = data.filter((item: Idata) => item.archived === false);
-  const dataArchived = data.filter((item: Idata) => item.archived === true);
+}: IContentNote) => {
+  const dataNote = data.filter((item: IData) => item.archived === false);
+  const dataArchived = data.filter((item: IData) => item.archived === true);
 
   return (
     <>
@@ -58,7 +52,7 @@ export const ContentNote = ({
             <>
               {!!dataNote && dataNote.length !== 0 ? (
                 dataNote
-                  .filter((data: Idata) => {
+                  .filter((data: IData) => {
                     if (search !== "") {
                       return data.title
                         .toLowerCase()
@@ -67,9 +61,9 @@ export const ContentNote = ({
                       return data;
                     }
                   })
-                  .map((item: Idata, i: number) => (
+                  .map((item: IData, index: number) => (
                     <CardNote
-                      key={i}
+                      key={index}
                       note={item}
                       statusName={statusName}
                       onDelete={onDelete}
@@ -86,7 +80,7 @@ export const ContentNote = ({
             <>
               {!!dataArchived && dataArchived.length !== 0 ? (
                 dataArchived
-                  .filter((data: Idata) => {
+                  .filter((data: IData) => {
                     if (search !== "") {
                       return data.title
                         .toLowerCase()
@@ -95,9 +89,9 @@ export const ContentNote = ({
                       return data;
                     }
                   })
-                  .map((item: Idata, i: number) => (
+                  .map((item: IData, index: number) => (
                     <CardNote
-                      key={i}
+                      key={index}
                       note={item}
                       statusName={statusName}
                       onDelete={onDelete}
